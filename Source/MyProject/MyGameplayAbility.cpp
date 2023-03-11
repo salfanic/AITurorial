@@ -5,18 +5,16 @@
 #include "AbilitySystemComponent.h"
 #include "GameplayTagContainer.h"
 
-UMyGameplayAbility::UMyGameplayAbility()
-{
-	// Default to Instance Per Actor
-	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+void UMyGameplayAbility::AddGameplayTags(const FGameplayTagContainer tags) {
+	UAbilitySystemComponent* comp = GetAbilitySystemComponentFromActorInfo();
+	if (comp != nullptr) {
+		comp->AddLooseGameplayTags(tags);
+	}
 }
 
-void UMyGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
-{
-	Super::OnAvatarSet(ActorInfo, Spec);
-
-	if (ActivateAbilityOnGranted)
-	{
-		ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
+void UMyGameplayAbility::RemoveGameplayTags(const FGameplayTagContainer tags) {
+	UAbilitySystemComponent* comp = GetAbilitySystemComponentFromActorInfo();
+	if (comp != nullptr) {
+		comp->RemoveLooseGameplayTags(tags);
 	}
 }
