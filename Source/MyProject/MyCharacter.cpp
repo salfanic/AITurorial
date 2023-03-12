@@ -3,6 +3,7 @@
 
 #include "MyCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "MyBlueprintFunctionLibrary.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter():Super()
@@ -17,7 +18,6 @@ AMyCharacter::AMyCharacter():Super()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -42,5 +42,7 @@ UAbilitySystemComponent* AMyCharacter::GetAbilitySystemComponent() const {
 void AMyCharacter::PossessedBy(AController* NewController) {
 	Super::PossessedBy(NewController);
 
-	this->AbilitySystem->RefreshAbilityActorInfo();
+	if (AbilitySystem != nullptr) {
+		AbilitySystem->RefreshAbilityActorInfo();
+	}
 }
